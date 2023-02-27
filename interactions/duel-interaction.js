@@ -20,65 +20,64 @@ const buttonRow = new ActionRowBuilder().addComponents(
     .setStyle(ButtonStyle.Danger)
 );
 
-const oponentIsBot = async (interaction) => {
-  return await interaction.reply({ content: "Bots não podem ser desafiados" });
+const oponentIsBot = (interaction) => {
+  return interaction.reply({ content: "Bots não podem ser desafiados" });
 };
 
-export const startDuel = async (interaction, challenger, oponent) => {
-  if (duelHooks.checkOponentIsBot(oponent))
-    return await oponentIsBot(interaction);
+export const startDuel = (interaction, challenger, oponent) => {
+  if (duelHooks.checkOponentIsBot(oponent)) return oponentIsBot(interaction);
 
   _oponent = oponent;
   _challenger = challenger;
 
-  await interaction.reply({
+  interaction.reply({
     content: `<@${_oponent.id}>, <@${_challenger.id}> o desafiou para um duelo!`,
     components: [buttonRow],
   });
 };
 
-export const checkChoice = async (interaction) => {
+export const checkChoice = (interaction) => {
   if (duelHooks.userIsNotOponent(interaction, _oponent)) {
-    return await userNotOponent(interaction);
+    return userNotOponent(interaction);
   }
 
   if (interaction.customId == POSITIVE_ID) {
-    if (challengerWinDuel()) return await challengerWin(interaction);
-    return await challengerLose(interaction);
+    if (challengerWinDuel()) return challengerWin(interaction);
+    return challengerLose(interaction);
   }
 
   duelRefused(interaction);
 };
 
-const challengerLose = async (interaction) => {
-  await interaction.update({
+const challengerLose = (interaction) => {
+  interaction.update({
     content: `<@${_oponent.id}> ganhou o duelo!`,
     components: [],
   });
 };
 
-const challengerWin = async (interaction) => {
-  await interaction.update({
+const challengerWin = (interaction) => {
+  interaction.update({
     content: `<@${_challenger.id}> ganhou o duelo!`,
     components: [],
   });
 };
 
-const duelRefused = async (interaction) => {
-  await interaction.update({
+const duelRefused = (interaction) => {
+  interaction.update({
     content: `<@${_oponent.id}> é um COVARDE!`,
     components: [],
   });
 };
 
-const userNotOponent = async (interaction) => {
+const userNotOponent = (interaction) => {
   const user = interaction.user;
 
-  await interaction.update({
+  interaction.update({
     content: `<@${user.id}> o oponente é <@${_oponent.id}> não você!`,
   });
 };
 
 const challengerWinDuel = () => {
-  return Math.random() >= 0.5;
+  return Math.random() >= 0.55;
 };

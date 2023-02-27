@@ -17,9 +17,9 @@ const bot = new Client({
 bot.commands = new Collection();
 botCommands.forEach((command) => bot.commands.set(command.data.name, command));
 
-bot.on(Events.InteractionCreate, async (interaction) => {
+bot.on(Events.InteractionCreate, (interaction) => {
   if (interaction.isButton()) {
-    return await duelInteraction.checkChoice(interaction);
+    return duelInteraction.checkChoice(interaction);
   }
 
   const command = interaction.client.commands.get(interaction.commandName);

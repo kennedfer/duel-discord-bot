@@ -8,7 +8,7 @@ em `Math.random()` para decidir se o desafiante perdeu ou ganhou, <br>
 algo como:
 
 ``` js
-const challengerWin = () => Math.random() >= 0.5
+const challengerWin = () => Math.random() >= 0.55
 ```
 eu nao pretendo levar esse projeto mais adiante, <br>
 contudo, talvez eu faça mais alguns comandos de interações <br>
